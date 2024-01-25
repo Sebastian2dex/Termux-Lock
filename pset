@@ -1,0 +1,56 @@
+#!/bin/bash
+
+PATH="/data/data/com.termux/files/usr/bin"
+if [[ -e "$PATH/.key.key" ]]; then
+    line=$( cat $PATH/.key.key )
+else
+    touch $PATH/.key.key
+fi
+
+while true; do
+	if [[ $line == '' ]]; then
+		read -s -p "New password : " p
+        echo ''
+		read -s -p "Retype new password : " rp
+        echo ''
+		if [[ $p == $rp ]]; then
+			echo -n $rp | md5sum > $PATH/.key.key
+			echo 'Password set'
+			break
+		elif [[ ${#p} < 5 || ${#rp} < 5 ]]; then
+			echo "Password must be greater than 5 characters"
+            break
+		elif [[ $p != $rp ]]; then
+			echo "Password must be same"
+			break
+		else
+			continue
+        fi
+
+	else
+		read -s -p "Old password : " op
+        echo ''
+		data=$( echo -n $op | md5sum )
+		if [[ $data == $line ]]; then
+			read -s -p "New password : " np
+            echo ''
+			read -s -p "Retype new password : " rnp
+            echo ''
+            if [[ $np == $rnp ]]; then
+                echo -n $np | md5sum > $PATH/.key.key
+                echo "Password updated"
+                break
+            elif [[ ${#np} < 5 || ${#rnp} < 5 ]]; then
+                echo "Password must be greater than 5 characters"
+            elif [[ $np != $rnp ]]; then
+                echo "Password must be same"
+                break
+            else
+                continue
+            fi
+        else
+            echo "Old passsord did't match"
+            break
+        fi
+    fi
+done
