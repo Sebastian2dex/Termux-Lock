@@ -1,10 +1,10 @@
 #!/bin/bash
 
-PATH="/data/data/com.termux/files/usr/bin"
-if [[ -e "$PATH/.key.key" ]]; then
-    line=$( cat $PATH/.key.key )
+path="$PREFIX/bin"
+if [[ -e "$path/.key.key" ]]; then
+    line=$( cat $path/.key.key )
 else
-    touch $PATH/.key.key
+    touch $path/.key.key
 fi
 
 while true; do
@@ -14,7 +14,7 @@ while true; do
 		read -s -p "Retype new password : " rp
         echo ''
 		if [[ $p == $rp ]]; then
-			echo -n $rp | md5sum > $PATH/.key.key
+			echo -n $rp | md5sum > $path/.key.key
 			echo 'Password set'
 			break
 		elif [[ ${#p} < 5 || ${#rp} < 5 ]]; then
@@ -37,7 +37,7 @@ while true; do
 			read -s -p "Retype new password : " rnp
             echo ''
             if [[ $np == $rnp ]]; then
-                echo -n $np | md5sum > $PATH/.key.key
+                echo -n $np | md5sum > $path/.key.key
                 echo "Password updated"
                 break
             elif [[ ${#np} < 5 || ${#rnp} < 5 ]]; then
