@@ -2,9 +2,9 @@
 
 trap '' INT TSTP
 
-PATH="/data/data/com.termux/files/usr/bin"
-if [[ -e "$PATH/.key.key" ]]; then
-    mpass=$( cat $PATH/.key.key )
+path="$PREFIX/bin"
+if [[ -e "$path/.key.key" ]]; then
+    mpass=$( cat $path/.key.key )
 else
     pset
 fi
