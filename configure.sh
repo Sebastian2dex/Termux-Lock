@@ -1,6 +1,6 @@
 #!/bin/bash
 
-path="/data/data/com.termux/files/usr/bin"
+path="$PREFIX/bin"
 
 if [[ -e "pset" && -e "pass.sh" ]]; then
     mv pset $path
